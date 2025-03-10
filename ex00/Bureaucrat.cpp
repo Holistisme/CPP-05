@@ -26,7 +26,7 @@ const std::string &Bureaucrat::setRandomName(void) {
 
 /* ############################################################################################## */
 
-Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade) : _name(name) {
+Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade) : _name(not name.empty() ? name : setRandomName()) {
 	gradeValidity(grade);
 	_grade = grade;
 }
@@ -40,7 +40,6 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &source) {
 		_grade = source._grade;
 	return *this;
 }
-
 
 /* ############################################################################################## */
 

@@ -93,7 +93,7 @@ std::string Input::setUserInput(const std::string &prompt) {
 
 		// 🔹 Checks if input interrupted (Ctrl+D)
 		if (std::cin.eof()) {
-			std::cout << "\nThanks for using " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << " !" << std::endl;
+			std::cout << "\nThanks for using " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << '!' << std::endl;
 			exit(0);
 		}
 

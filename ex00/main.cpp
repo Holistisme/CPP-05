@@ -23,7 +23,7 @@ static void awardCeremony(Bureaucrat &bureaucrat);
  * @return 0 on successful execution, 1 if an exception is encountered.
  */
 int main(void) {
-	std::cout << "Welcome in " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << " !\n" << std::endl;
+	std::cout << "Welcome in " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << "!\n" << std::endl;
 	std::srand(time(0));
 
 	while (true) {

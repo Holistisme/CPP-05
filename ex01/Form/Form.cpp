@@ -39,7 +39,7 @@ const std::string &Form::setRandomName(void) const {
 
 /* ############################################################################################## */
 
-Form::Form(const std::string &name, const unsigned int requiredGrade, const unsigned int executableGrade) : _name(name), _signed(false),
+Form::Form(const std::string &name, const unsigned int requiredGrade, const unsigned int executableGrade) : _name(not name.empty() ? name : setRandomName()), _signed(false),
 																											_requiredGrade(requiredGrade), _executableGrade(executableGrade) {
 	gradeValidity(requiredGrade);
 	gradeValidity(executableGrade);
@@ -73,18 +73,18 @@ void Form::gradeValidity(const unsigned int request) {
 
 /* ############################################################################################## */
 
-const char *Form::GradeTooHighException::what() const throw() { return "Grade too high!";		  };
-const char *Form::GradeTooLowException::what()  const throw() { return "Grade too low!";		  };
-const char *Form::IsAlreadySigned::what()		const throw() { return "Form is already signed!"; };
+const char *Form::GradeTooHighException::what() const throw() { return "Grade too high";		  };
+const char *Form::GradeTooLowException::what()  const throw() { return "Grade too low";		  };
+const char *Form::IsAlreadySigned::what()		const throw() { return "Form is already signed"; };
 
 /* ############################################################################################## */
 
 std::ostream &operator<<(std::ostream &stream, const Form &form) {
-	std::string state = not form.isSigned() ? ColorFormat::formatString(" not already signed.", "green") : ColorFormat::formatString(" is already signed.", "red");
+	std::string state = not form.isSigned() ? ColorFormat::formatString(" not already signed", "green") : ColorFormat::formatString(" is already signed.", "red");
 
 	stream << ColorFormat::formatString(form.getName(), "magenta", "italic") << state
-		<< " The grade required for signature is " << ColorFormat::formatGradientUnsignedInteger(form.getRequiredGrade(), 150, 1)
-		<< ", and the grade required for its execution is " << ColorFormat::formatGradientUnsignedInteger(form.getRequiredGrade(), 150, 1) << '.';
+		<< ". The grade required for signature is " << ColorFormat::formatGradientUnsignedInteger(form.getRequiredGrade(), 150, 1)
+		<< ", and the grade required for its execution is " << ColorFormat::formatGradientUnsignedInteger(form.getExecutableGrade(), 150, 1) << '.';
     return stream;
 }
 

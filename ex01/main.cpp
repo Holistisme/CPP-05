@@ -9,42 +9,32 @@
 /* ############################################################################################## */
 
 static void awardCeremony(Bureaucrat &bureaucrat);
+static void bureaucratSignature(Bureaucrat &bureaucrat);
 
 /* ############################################################################################## */
 
 
 int main(void) {
-	std::cout << "Welcome in " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << " !\n" << std::endl;
+	std::cout << "Welcome in " << ColorFormat::formatString("FormUp™", "magenta", "blink", "bold") << '!' << std::endl;
 	std::srand(time(0));
 
 	while (true) {
 		try {
-			Input formInputs[3][3];
-			Form  formLists[3];
-			for (size_t i = 0 ; i < 3 ; i++) {
-				std::cout << "Let's create three forms, write the " << i << ":" << std::endl;
-				try {
-					formInputs[i][0] = Input("What name should I give it (leave blank for a random form)?");
-					if (not formInputs[i][0].stringFormat().empty()) {
-						try { formInputs[i][1] = Input("Grade required for signature:"); }
-						catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
-						try { formInputs[i][2] = Input("Grade required for application:"); }
-						catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
-					}
-				}
-				catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
-				unsigned int signatureGrade	  = rand() % 150 + 1;
-				unsigned int applicationGrade = rand() % signatureGrade + 1;
-				try {
-					signatureGrade	 = formInputs[i][1].unsignedIntegerFormat();
-					applicationGrade = formInputs[i][1].unsignedIntegerFormat();
-				}
-				catch (...) {
-					std::cout << "In the absence of a valid grade, the form will " << ColorFormat::rainbow("randomly", "blink") << " draw one!" << std::endl;
-				}
-			}
+			std::cout << ColorFormat::formatString("\n=== Let's create a custom form! ===\n", "bold") << std::endl;
+			Form customForm(Input ("What " + ColorFormat::formatString("name", "magenta") + " should we give it?").stringFormat(),
+							Input ("Grade required for " + ColorFormat::formatString("signature", "blue") + ":").unsignedIntegerFormat(),
+							Input ("Grade required for " + ColorFormat::formatString("signature", "yellow") + ":").unsignedIntegerFormat());
+			std::cout << '\n' << customForm << std::endl;
+			Bureaucrat("Rick Astley", 1).signForm(customForm);
+			Bureaucrat("Nick Rustley", 5).signForm(customForm);
+			break;
+		} catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
+	}
 
-			Input		 bureaucratName("What " + ColorFormat::formatString("name", "cyan") + " to give the bureaucrat?");
+	while (true) {
+		std::cout << ColorFormat::formatString("\n=== Time to form a bureaucrat for a future signature! ===\n", "bold") << std::endl;
+		try {
+			Input		 bureaucratName("What " + ColorFormat::formatString("name", "cyan") + " to give the bureaucrat (leave empty for skip)?");
 			unsigned int grade = 0;
 
 			if (not bureaucratName.stringFormat().empty()) {
@@ -86,6 +76,7 @@ static void awardCeremony(Bureaucrat &bureaucrat) {
 		try { bureaucrat.decrementGrade(); }
 		catch (const Bureaucrat::GradeTooLowException &e) {
 			std::cerr << ColorFormat::formatString(bureaucrat.getName(), "red", "strikethrough") << ColorFormat::formatString(", YOUR INTELLECTUAL INFERIORITY AMAZES US ALL, YOU ARE EXCLUDED!", "red", "bold") << std::endl;
+			return;
 		}
 	}
 	else {
@@ -96,4 +87,20 @@ static void awardCeremony(Bureaucrat &bureaucrat) {
 		}
 	}
 	std::cout << bureaucrat << std::endl;
+	bureaucratSignature(bureaucrat);
+}
+
+static void bureaucratSignature(Bureaucrat &bureaucrat) {
+	Form form;
+	std::cout << ColorFormat::formatString("\n=== Let's sign a random form! ===\n", "bold") << std::endl;
+	std::cout << form << std::endl;
+
+	try {
+		std::cout << "The bureaucrat tries to sign it..." << std::endl;
+		bureaucrat.signForm(form);
+		if (form.isSigned() and Input ("The signature is " + ColorFormat::formatString("dirty", "red") + ", should the bureaucrat re-sign? (" + ColorFormat::formatString("y", "green") + " to continue)").stringFormat() == "y")
+			bureaucrat.signForm(form);
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
 }

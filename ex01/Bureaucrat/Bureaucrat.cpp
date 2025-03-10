@@ -26,7 +26,7 @@ const std::string &Bureaucrat::setRandomName(void) {
 
 /* ############################################################################################## */
 
-Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade) : _name(name) {
+Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade) : _name(not name.empty() ? name : setRandomName()) {
 	gradeValidity(grade);
 	_grade = grade;
 }
@@ -87,10 +87,10 @@ std::ostream &operator<<(std::ostream &stream, const Bureaucrat &bureaucrat) {
 void Bureaucrat::signForm(Form &form) {
 	try {
 		form.beSigned(*this);
-		std::cout << ColorFormat::formatString(getName(), "blue", "italic") << " signed " << ColorFormat::formatString(getName(), "magenta") << '.' << std::endl;
+		std::cout << ColorFormat::formatString(getName(), "blue", "italic") << " signed " << ColorFormat::formatString(form.getName(), "magenta") << '.' << std::endl;
 	}
 	catch (const std::exception &e) {
-		std::cout << ColorFormat::formatString(getName(), "blue", "italic") << " couldn’t sign " << ColorFormat::formatString(getName(), "magenta")
+		std::cout << ColorFormat::formatString(getName(), "blue", "italic") << " couldn’t sign " << ColorFormat::formatString(form.getName(), "magenta")
 			<< " because " << ColorFormat::formatString(e.what(), "red") << '.' << std::endl;
 	}
 }

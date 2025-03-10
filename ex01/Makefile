@@ -1,4 +1,4 @@
-NAME		= Bureaucrat
+NAME		= FormUp
 
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -Wshadow -std=c++98
@@ -7,6 +7,7 @@ SOURCE		= main.cpp						\
 			Bureaucrat/Bureaucrat.cpp		\
 			ColorFormatLib/ColorFormat.cpp	\
 			InputLib/Input.cpp				\
+			Form/Form.cpp					\
 
 OBJECTS		= $(SOURCE:.cpp=.o)
 
