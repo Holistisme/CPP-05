@@ -15,25 +15,25 @@ static void bureaucratSignature(Bureaucrat &bureaucrat);
 
 
 int main(void) {
-	std::cout << "Welcome in " << ColorFormat::formatString("FormUp™", "magenta", "blink", "bold") << '!' << std::endl;
-	std::srand(time(0));
+	try {
+		std::cout << "Welcome in " << ColorFormat::formatString("FormUp™", "magenta", "blink", "bold") << '!' << std::endl;
+		std::srand(time(0));
 
-	while (true) {
-		try {
-			std::cout << ColorFormat::formatString("\n=== Let's create a custom form! ===\n", "bold") << std::endl;
-			Form customForm(Input ("What " + ColorFormat::formatString("name", "magenta") + " should we give it?").stringFormat(),
-							Input ("Grade required for " + ColorFormat::formatString("signature", "blue") + ":").unsignedIntegerFormat(),
-							Input ("Grade required for " + ColorFormat::formatString("signature", "yellow") + ":").unsignedIntegerFormat());
-			std::cout << '\n' << customForm << std::endl;
-			Bureaucrat("Rick Astley", 1).signForm(customForm);
-			Bureaucrat("Nick Rustley", 5).signForm(customForm);
-			break;
-		} catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
-	}
+		while (true) {
+			try {
+				std::cout << ColorFormat::formatString("\n=== Let's create a custom form! ===\n", "bold") << std::endl;
+				Form customForm(Input ("What " + ColorFormat::formatString("name", "magenta") + " should we give it?").stringFormat(),
+								Input ("Grade required for " + ColorFormat::formatString("signature", "blue") + ":").unsignedIntegerFormat(),
+								Input ("Grade required for " + ColorFormat::formatString("signature", "yellow") + ":").unsignedIntegerFormat());
+				std::cout << '\n' << customForm << std::endl;
+				Bureaucrat("Rick Astley", 1).signForm(customForm);
+				Bureaucrat("Nick Rustley", 5).signForm(customForm);
+				break;
+			} catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
+		}
 
-	while (true) {
-		std::cout << ColorFormat::formatString("\n=== Time to form a bureaucrat for a future signature! ===\n", "bold") << std::endl;
-		try {
+		while (true) {
+			std::cout << ColorFormat::formatString("\n=== Time to form a bureaucrat for a future signature! ===\n", "bold") << std::endl;
 			Input		 bureaucratName("What " + ColorFormat::formatString("name", "cyan") + " to give the bureaucrat (leave empty for skip)?");
 			unsigned int grade = 0;
 
@@ -62,10 +62,10 @@ int main(void) {
 
 			std::cout << std::endl;
 			std::cout << ColorFormat::formatString("Let's move on to another bureaucrat...", "italic") << '\n' << std::endl;
-		} catch (const std::exception &e) {
-			std::cerr << e.what() << std::endl;
-			return 1;
 		}
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+		return 1;
 	}
 }
 

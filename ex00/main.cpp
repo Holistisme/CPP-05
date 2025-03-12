@@ -23,11 +23,11 @@ static void awardCeremony(Bureaucrat &bureaucrat);
  * @return 0 on successful execution, 1 if an exception is encountered.
  */
 int main(void) {
-	std::cout << "Welcome in " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << "!\n" << std::endl;
-	std::srand(time(0));
+	try {
+		std::cout << "Welcome in " << ColorFormat::formatString("Bureaucrat™", "green", "blink", "bold") << "!\n" << std::endl;
+		std::srand(time(0));
 
-	while (true) {
-		try {
+		while (true) {
 			Input		 bureaucratName("What " + ColorFormat::formatString("name", "cyan") + " to give the bureaucrat?");
 			unsigned int grade = 0;
 
@@ -56,10 +56,10 @@ int main(void) {
 
 			std::cout << std::endl;
 			std::cout << ColorFormat::formatString("Let's move on to another bureaucrat...", "italic") << '\n' << std::endl;
-		} catch (const std::exception &e) {
-			std::cerr << e.what() << std::endl;
-			return 1;
 		}
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+		return 1;
 	}
 }
 
