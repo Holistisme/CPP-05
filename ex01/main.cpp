@@ -24,7 +24,7 @@ int main(void) {
 				std::cout << ColorFormat::formatString("\n=== Let's create a custom form! ===\n", "bold") << std::endl;
 				Form customForm(Input ("What " + ColorFormat::formatString("name", "magenta") + " should we give it?").stringFormat(),
 								Input ("Grade required for " + ColorFormat::formatString("signature", "blue") + ":").unsignedIntegerFormat(),
-								Input ("Grade required for " + ColorFormat::formatString("signature", "yellow") + ":").unsignedIntegerFormat());
+								Input ("Grade required for " + ColorFormat::formatString("execution", "yellow") + ":").unsignedIntegerFormat());
 				std::cout << '\n' << customForm << std::endl;
 				Bureaucrat("Rick Astley", 1).signForm(customForm);
 				Bureaucrat("Nick Rustley", 5).signForm(customForm);
@@ -100,7 +100,5 @@ static void bureaucratSignature(Bureaucrat &bureaucrat) {
 		bureaucrat.signForm(form);
 		if (form.isSigned() and Input ("The signature is " + ColorFormat::formatString("dirty", "red") + ", should the bureaucrat re-sign? (" + ColorFormat::formatString("y", "green") + " to continue)").stringFormat() == "y")
 			bureaucrat.signForm(form);
-	} catch (const std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	}
+	} catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
 }
