@@ -35,11 +35,23 @@ int main(void) {
 			std::cout << "Robotomy Request [" << ColorFormat::formatString("72", "cyan", "italic") << " - " << ColorFormat::formatString("45", "yellow", "italic") << "]" << std::endl;
 			std::cout << "Shrubbery Creation [" << ColorFormat::formatString("145", "cyan", "italic") << " - " << ColorFormat::formatString("137", "yellow", "italic") << "]" << std::endl;
 	
-			AForm *form = intern.makeForm(Input ("\nChoose the form type (in words):").stringFormat(), "");
+			Input formRequested("\nChoose the form type (in words):");
+			AForm *form = intern.makeForm(formRequested.stringFormat(), "");
 			if (form) {
 				signatory.signForm(*form);
 				executor.executeForm(*form);
 				delete form;
+			}
+			else if (signatory.getName()		  == "Stock Aitken Waterman"
+			     and executor.getName()			  == "Rick Astley"
+				 and formRequested.stringFormat() == "Never Gonna Give You Up") {
+				#ifdef __linux__
+					system("xdg-open https://www.youtube.com/watch?v=dQw4w9WgXcQ > /dev/null 2>&1");
+				#elif _WIN32
+					system("start https://www.youtube.com/watch?v=dQw4w9WgXcQ > nul 2>&1");
+				#elif __APPLE__
+					system("open https://www.youtube.com/watch?v=dQw4w9WgXcQ > /dev/null 2>&1");
+				#endif
 			}
 			std::cout << ColorFormat::formatString("\n\n\n=== Let's move on to the next test! ===\n\n", "bold", "underline") << std::endl;
 		}
